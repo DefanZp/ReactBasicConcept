@@ -6,10 +6,10 @@ const Details = () => {
   const { id } = useParams(); 
   const [restaurant, setRestaurant] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`https://restaurant-api.dicoding.dev/detail/${id}`);
         setRestaurant(response.data.restaurant);
       } catch (error) {

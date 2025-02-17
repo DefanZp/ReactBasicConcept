@@ -9,6 +9,7 @@ const Card = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("https://restaurant-api.dicoding.dev/list");
         setData(response.data.restaurants);
       } catch (error) {
