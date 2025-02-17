@@ -41,7 +41,7 @@ const SearchRestaurantPage = () => {
         
         {loading ? (
             <p>Loading...</p>
-        ) : (
+        ) : ( searchQuery && (
             <div className="w-[100%] flex flex-row overflow-x-scroll gap-4">
                 {restaurant.map((restaurants) => (
                     <Link to={`/restaurant/${restaurants.id}`}>
@@ -53,7 +53,7 @@ const SearchRestaurantPage = () => {
                     </div>
                     </Link>
                 )) }
-            </div>
+            </div>)
         )}
     </div>
     </>
