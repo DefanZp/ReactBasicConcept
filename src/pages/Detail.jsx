@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 const Details = () => {
   const { id } = useParams(); 
-  const [restaurant, setRestaurant] = useState(null);
+  const [restaurant, setRestaurant] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
@@ -14,25 +15,31 @@ const Details = () => {
       } catch (error) {
         console.error("Error fetching restaurant detail:", error);
       }
+      finally {
+        setLoading(false);
+      }
     };
 
     fetchRestaurantDetail();
   }, [id]);
 
-  if (!restaurant) {
-    return <div>Loading...</div>;
-  }
+
 
   return (
-    <div>
+    <div >
+      {loading ? ( 
+        <p>Loading...</p> 
+      ) : (
+        <>
         <img
-        src={`https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}`}
+        src={`https://restaurant-api.dicoding.dev/images/medium/${restaurant?.pictureId}`}
         alt={restaurant?.name}
       />
-      <h1>{restaurant.name}</h1>
-      <p>{restaurant.city}</p>
-      <p>{restaurant.description}</p>
-      
+      <h1>{restaurant?.name}</h1>
+      <p>{restaurant?.city}</p>
+      <p>{restaurant?.description}</p>
+      </>
+      )}
     </div>
   );
 };
