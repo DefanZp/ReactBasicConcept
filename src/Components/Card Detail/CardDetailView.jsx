@@ -1,78 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const Card = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "https://restaurant-api.dicoding.dev/list"
-        );
-        setData(response.data.restaurants);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+const CardDetailView = ({
+    loading,
+    data
+}) => {
   return (
-    <>
-      <div className="flex flex-row pt-24 px-52 mb-28">
-        {loading ? (
-          <p>Loading...</p>
-        ) : data[0] ? (
-          <>
-            <div className="w-[50%] flex flex-col justify-between">
-              <p className="font-semibold text-[42px] text-white">{data[0].name}</p>
-              <p className="text-white">{data[0].description.substring(0, 200)}...</p>
-              <Link to={`/restaurant/${data[0]?.id}`} key={data[0]?.id}>
-                <button className="flex flex-row items-center font-semibold gap-2 text-white">
-                  Lihat Detail
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </button>
-              </Link>
-            </div>
-
-            <div className="flex w-[50%] justify-end">
-            <img className="h-full w-[85%]  rounded-xl" src={`https://restaurant-api.dicoding.dev/images/medium/${data[0]?.pictureId}`}>
-            </img>
-            </div>
-          </>
-        ) : (
-          <p>Tidak ada data..</p>
-        )}
-      </div>
-
-      <div className="grid grid-cols-3 gap-y-16 justify-items-center gap-3 overflow-auto px-52 pb-24">
+    <div className="flex flex-row gap-y-16 justify-items-center gap-3 overflow-auto custom-scrollbar ">
         {loading ? (
           <p>Loading...</p>
         ) : (
           data?.map((item) => (
             <Link to={`/restaurant/${item?.id}`} key={item?.id}>
               <div
-                className="flex flex-col justify-between pt-5 pl-5 pb-8 w-64 h-80 bg-cover bg-center bg-black bg-opacity-30 bg-blend-darken rounded-xl"
+                className="flex flex-col justify-between pt-5 pl-5 pb-8 w-56 h-72 bg-cover bg-center bg-black bg-opacity-30 bg-blend-darken rounded-xl"
                 style={{
                   backgroundImage: `url(https://restaurant-api.dicoding.dev/images/medium/${item?.pictureId})`,
                 }}
@@ -133,8 +74,7 @@ const Card = () => {
           ))
         )}
       </div>
-    </>
-  );
-};
+  )
+}
 
-export default Card;
+export default CardDetailView

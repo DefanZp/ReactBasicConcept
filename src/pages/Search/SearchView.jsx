@@ -1,36 +1,14 @@
-import { Link, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const SearchRestaurantPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get("q");
-  const [restaurant, setRestaurant] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [inputValue, setInputValue] = useState(searchQuery);
-
-  useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://restaurant-api.dicoding.dev/search?q=${searchQuery}`
-        );
-        setRestaurant(response.data.restaurants);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRestaurant();
-  }, [searchQuery]);
-
-  const handleSearch = () => {
-    setSearchParams({ q: inputValue });
-  };
-
+const SearchView = ({
+    loading,
+    restaurant,
+    setInputValue,
+    handleSearch,
+    inputValue,
+    searchQuery,
+}) => {
   return (
     <>
       <div className="flex flex-col w-full">
@@ -91,10 +69,11 @@ const SearchRestaurantPage = () => {
         </section>
 
         <section>
-        <div className="grid grid-cols-3 gap-y-16 justify-items-center gap-3 overflow-auto px-52 pb-24">    
+        <div className="grid grid-cols-3 gap-y-16 justify-items-center gap-3 overflow-auto px-52 pb-24"> 
+              
           {loading ? (
             <p>Loading...</p>
-          ) :  ( searchQuery &&(
+          ) :  ( searchQuery && (
                 restaurant?.map((item) => (
                     <Link to={`/restaurant/${item?.id}`} key={item?.id}>
                       <div
@@ -163,7 +142,7 @@ const SearchRestaurantPage = () => {
         </section>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SearchRestaurantPage;
+export default SearchView
