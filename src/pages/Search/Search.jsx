@@ -1,27 +1,38 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState,useReducer } from "react";
 import axios from "axios";
+import "./Search.scss"
 import SearchView from "./SearchView";
 
 const initialState = {
   restaurant : [],
   loading : true,
+  searching : false
 };
 
 const Reducer = (state, action) => {
   switch (action.type) {
+
+    case "Searching":  
+      return {
+        ...state,
+        searching: true,  
+      };
+
     case "Fetch_success" :
       return {
         ...state,
         restaurant: action.payload,
         loading: false,
+        searching: false
       };
 
     case "Fetch_error" :
       return {
         ...state,
         error: action.payload,
-        loading:false
+        loading:false,
+        searching: false
       };
 
     default :
@@ -39,6 +50,7 @@ const SearchRestaurantPage = () => {
 
   useEffect(() => {
     const fetchRestaurant = async () => {
+      dispatch ({type:"Searching"})
       try {
         const response = await axios.get(
           `https://restaurant-api.dicoding.dev/search?q=${searchQuery}`
@@ -66,6 +78,7 @@ const SearchRestaurantPage = () => {
     inputValue={inputValue}
     searchQuery={searchQuery}
     error={state.error}
+    searching={state.searching}
     />
   );
 };

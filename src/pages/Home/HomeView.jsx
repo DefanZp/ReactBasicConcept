@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../../Components/Card/Card";
-import Bg from "../../assets/Bg.jpg"
+import Bg from "../../assets/Bg.jpg";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const HomeView = ({
-    loading,
-    data,
-    currentIndex
-}) => {
+const HomeView = ({ loading, data, currentIndex }) => {
   return (
     <>
       <section className="bg-[#FBFBFB] pt-8 px-52 pb-32">
@@ -38,7 +36,7 @@ const HomeView = ({
         <div className="flex flex-row gap-10">
           <div className="w-[50%]">
             {loading ? (
-              <p className="text-center">Loading...</p>
+              <Skeleton className="w-[600px] h-[350px]  rounded-lg shadow-xl" />
             ) : data.length > 0 ? (
               <img
                 src={`https://restaurant-api.dicoding.dev/images/medium/${data[currentIndex]?.pictureId}`}
@@ -51,18 +49,26 @@ const HomeView = ({
           </div>
 
           <div className="flex flex-col w-[50%] justify-center">
-            <p className=" mb-2 text-xl font-semibold">
-              {" "}
-              Mau cari tempat makan enak?
-            </p>
-            <p className="">
-              Di sini, kamu bisa temukan berbagai restoran dengan makanan lezat
-              dan suasana yang pas buat segala momen. Mau makan bareng keluarga,
-              hangout sama teman, atau makan malam romantis? Kami punya
-              rekomendasi yang pas buat kamu. Gak perlu bingung, cukup cari,
-              klik, dan nikmati makanannya. Yuk, cari restoran yang cocok
-              buatmu!
-            </p>
+            {loading ? (
+              <>
+              <Skeleton className="pt-4 mb-2"/>
+              <Skeleton count={7}/>
+              </>
+            ) : (
+              <>
+                <p className=" mb-2 text-xl font-semibold">
+                  Mau cari tempat makan enak?
+                </p>
+                <p className="">
+                  Di sini, kamu bisa temukan berbagai restoran dengan makanan
+                  lezat dan suasana yang pas buat segala momen. Mau makan bareng
+                  keluarga, hangout sama teman, atau makan malam romantis? Kami
+                  punya rekomendasi yang pas buat kamu. Gak perlu bingung, cukup
+                  cari, klik, dan nikmati makanannya. Yuk, cari restoran yang
+                  cocok buatmu!
+                </p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -79,7 +85,7 @@ const HomeView = ({
         <Card />
       </section>
     </>
-  )
-}
+  );
+};
 
-export default HomeView
+export default HomeView;

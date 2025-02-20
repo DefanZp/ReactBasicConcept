@@ -1,15 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const CardDetailView = ({
     loading,
     data
 }) => {
   return (
     <div className="flex flex-row gap-y-16 justify-items-center gap-3 overflow-auto custom-scrollbar ">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
+        {loading ? [...Array(6)].map(() => (
+                          <>
+                          <div
+                            className="flex flex-col justify-between pt-5 pl-5 pr-5 pb-8 w-64 h-80 bg-gray-300 bg-opacity-30 rounded-xl"
+                          >
+                            <Skeleton className='w-[100%] h-[36px]'/>
+                
+                            <div className='gap-12'>
+                            <Skeleton className='w-[124px] h-[28px]'/>  
+                            <Skeleton className='w-[124px] h-[20px]'/> 
+                            <Skeleton className='w-[124px] h-[20px]'/>
+                            </div> 
+                             
+                          </div>
+                          </>
+                        )) : (
           data?.map((item) => (
             <Link to={`/restaurant/${item?.id}`} key={item?.id}>
               <div

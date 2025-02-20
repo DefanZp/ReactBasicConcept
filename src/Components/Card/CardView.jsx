@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const CardView = ({
 
    loading, data 
@@ -9,7 +10,16 @@ const CardView = ({
     <>
       <div className="flex flex-row pt-24 px-52 mb-28">
         {loading ? (
-          <p>Loading...</p>
+          <div className="w-full flex flex-row">
+          <div className="w-[50%] flex flex-col justify-between">
+            <Skeleton height={50} width={300} />
+            <Skeleton count={3} />
+            <Skeleton width={150} height={40} />
+          </div>
+          <div className="flex w-[50%] justify-end">
+            <Skeleton width={250} height={250} />
+          </div>
+        </div>
         ) : data?.[0] ? (
           <>
             <div className="w-[50%] flex flex-col justify-between">
@@ -41,6 +51,7 @@ const CardView = ({
             </div>
 
             <div className="flex w-[50%] justify-end">
+              {}
               <img
                 className="h-full w-[85%]  rounded-xl"
                 src={`https://restaurant-api.dicoding.dev/images/medium/${data[0]?.pictureId}`}
@@ -53,9 +64,20 @@ const CardView = ({
       </div>
 
       <div className="grid grid-cols-3 gap-y-16 justify-items-center gap-3 overflow-auto px-52 pb-24">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
+        {loading ? [...Array(6)].map(() => (
+                  <div
+                    className="flex flex-col justify-between pt-5 pl-5 pr-5 pb-8 w-64 h-80 bg-gray-300 bg-opacity-30 rounded-xl"
+                  >
+                    <Skeleton className='w-[124px] h-[36px]'/>
+        
+                    <div className='gap-12'>
+                    <Skeleton className='w-[124px] h-[28px]'/>  
+                    <Skeleton className='w-[124px] h-[20px]'/> 
+                    <Skeleton className='w-[124px] h-[20px]'/>
+                    </div> 
+                     
+                  </div>
+                )) : (
           data?.map((item) => (
             <Link to={`/restaurant/${item?.id}`} key={item?.id}>
               <div

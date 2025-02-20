@@ -1,5 +1,7 @@
 import React from 'react'
 import Card from "../../Components/Card Detail/CardDetail";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const DetailView = ({
     loading,
@@ -8,7 +10,38 @@ const DetailView = ({
   return (
     <>
     {loading ? (
-        <p>Loading...</p>
+          <div className="flex flex-row h-full bg-[#FBFBFB]">
+          <div className="w-[35%] pt-[156px] pl-[42px] bg-gray-300">
+            <Skeleton height={50} width={200} />
+            <Skeleton height={36} width={250} />
+            <Skeleton height={24} width={150} />
+          </div>
+
+          <div className="w-[65%] pt-28 px-28 pb-16">
+            <div className="flex flex-row items-center justify-between mb-7">
+              <Skeleton width={200} height={34} />
+              <Skeleton width={50} height={34} />
+            </div>
+
+            <Skeleton height={100} width={"85%"} />
+
+            <div className="flex flex-row gap-3 mt-8">
+              <Skeleton height={24} width={100} />
+              <div className="flex flex-col gap-1">
+                <Skeleton height={20} width={120} count={4} />
+              </div>
+            </div>
+
+            <div className="flex flex-row gap-3 ml-28 mt-8">
+              <Skeleton height={24} width={100} />
+              <div className="flex flex-col gap-1">
+                <Skeleton height={20} width={120} count={4} />
+              </div>
+            </div>
+
+            <Skeleton height={40} width={250} className="mt-12" />
+          </div>
+        </div>
       ) : (
         <>
           <div className="flex felx-row h-full bg-[#FBFBFB]">
@@ -18,7 +51,11 @@ const DetailView = ({
                 backgroundImage: `url(https://restaurant-api.dicoding.dev/images/medium/${restaurant?.pictureId})`,
               }}
             >
-              <h1 className="text-white">Restaurant</h1>
+              {loading ? (
+                <Skeleton/>
+              ): (
+                <>
+                <h1 className="text-white">Restaurant</h1>
               <h1 className="text-white text-[36px] font-semibold mb-24">
                 {restaurant?.name}
               </h1>
@@ -44,6 +81,9 @@ const DetailView = ({
                 </svg>
                 {restaurant?.city},{restaurant.address}
               </p>
+                </>
+              ) }
+              
             </div>
 
             <div className="w-[65%] pt-28 px-28 pb-16">

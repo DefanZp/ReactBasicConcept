@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const SearchView = ({
     loading,
@@ -8,6 +10,7 @@ const SearchView = ({
     handleSearch,
     inputValue,
     searchQuery,
+    searching,
 }) => {
   return (
     <>
@@ -37,43 +40,59 @@ const SearchView = ({
             Cari restaurantmu!
           </h1>
 
+        {loading ? (
+          <Skeleton className='h-[56px] rounded-lg'/>
+        ) : (
           <div className="flex flex-row text-[#a8a8a8] items-center shadow-lg justify-between pl-5">
-            <div className="flex flex-row gap-4">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
+          <div className="flex flex-row gap-4">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="size-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+          
+          <input
+            className=" focus-visible: outline-none bg-[#FBFBFB]"
+            type="text"
+            placeholder="Cari disini..."
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+          ></input>
 
-            <input
-              className=" focus-visible: outline-none"
-              type="text"
-              placeholder="Cari disini..."
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-            ></input>
+          </div>  
 
-            </div>  
-
-            <button onClick={handleSearch} className="bg-black px-4 py-4 text-white"> Cari</button>    
-          </div>
+          <button onClick={handleSearch} className="bg-black px-4 py-4 text-white"> Cari</button>    
+        </div>
+        )}
+          
         </section>
 
-        <section>
+        <section className='bg-[#FBFBFB]'>
         <div className="grid grid-cols-3 gap-y-16 justify-items-center gap-3 overflow-auto px-52 pb-24"> 
               
-          {loading ? (
-            <p>Loading...</p>
-          ) :  ( searchQuery && (
+          {searching ? [...Array(6)].map(() => (
+          <div
+            className="flex flex-col justify-between pt-5 pl-5 pr-5 pb-8 w-64 h-80 bg-gray-300 bg-opacity-30 rounded-xl"
+          >
+            <Skeleton className='w-[124px] h-[36px]'/>
+
+            <div className='gap-12'>
+            <Skeleton className='w-[124px] h-[28px]'/>  
+            <Skeleton className='w-[124px] h-[20px]'/> 
+            <Skeleton className='w-[124px] h-[20px]'/>
+            </div> 
+             
+          </div>
+        )) :  ( searchQuery && (
                 restaurant?.map((item) => (
                     <Link to={`/restaurant/${item?.id}`} key={item?.id}>
                       <div
