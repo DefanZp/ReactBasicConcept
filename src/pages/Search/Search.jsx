@@ -1,5 +1,5 @@
-import { useSearchParams } from "react-router-dom";
-import { useEffect, useState,useReducer } from "react";
+import { data, useSearchParams } from "react-router-dom";
+import { useEffect, useState,useReducer, useCallback } from "react";
 import axios from "axios";
 import "./Search.scss"
 import SearchView from "./SearchView";
@@ -65,9 +65,10 @@ const SearchRestaurantPage = () => {
     fetchRestaurant();
   }, [searchQuery]);
 
-  const handleSearch = () => {
+
+  const handleSearch = useCallback(() => {
     setSearchParams({ q: inputValue });
-  };
+  }, [inputValue, setSearchParams]);
 
   return (
     <SearchView

@@ -1,23 +1,24 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import Card from "../../Components/Card/Card";
 import Bg from "../../assets/Bg.jpg";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import "./Home.scss"
 
 const HomeView = ({ loading, data, currentIndex }) => {
   return (
     <>
-      <section className="bg-[#FBFBFB] pt-8 px-52 pb-32">
-        <nav className="flex flex-row mb-14">
+      <section className="Container">
+        <nav className="Navbar">
           <img
             width="50"
             height="50"
             src="https://img.icons8.com/ios-filled/50/restaurant--v1.png"
             alt="restaurant--v1"
           />
-          <ul className="list-none flex flex-row flex-1 items-center justify-center">
-            <li className="flex flex-row gap-12">
+          <ul className="Nav-ul">
+            <li className="Nav-li">
               <Link to={"/"}>
                 <p>Home</p>
               </Link>
@@ -29,26 +30,26 @@ const HomeView = ({ loading, data, currentIndex }) => {
           </ul>
         </nav>
 
-        <h1 className="text-[46px] font-semibold pt-4 pl-4 pb-4 text-black text-center mb-20">
+        <h1 className="h1">
           Temukan restaurantmu!
         </h1>
 
-        <div className="flex flex-row gap-10">
-          <div className="w-[50%]">
+        <div className="Container-image">
+          <div className="C-container-image">
             {loading ? (
               <Skeleton className="w-[600px] h-[350px]  rounded-lg shadow-xl" />
             ) : data.length > 0 ? (
               <img
                 src={`https://restaurant-api.dicoding.dev/images/medium/${data[currentIndex]?.pictureId}`}
                 alt={data[currentIndex]?.name}
-                className="w-[600px] h-[350px] object-cover rounded-lg shadow-xl transition-opacity duration-500"
+                className="Image"
               />
             ) : (
-              <p className="text-center">Tidak ada data</p>
+              <p className="p">Tidak ada data</p>
             )}
           </div>
 
-          <div className="flex flex-col w-[50%] justify-center">
+          <div className="Container-text">
             {loading ? (
               <>
               <Skeleton className="pt-4 mb-2"/>
@@ -56,7 +57,7 @@ const HomeView = ({ loading, data, currentIndex }) => {
               </>
             ) : (
               <>
-                <p className=" mb-2 text-xl font-semibold">
+                <p className="h-text">
                   Mau cari tempat makan enak?
                 </p>
                 <p className="">
@@ -88,4 +89,4 @@ const HomeView = ({ loading, data, currentIndex }) => {
   );
 };
 
-export default HomeView;
+export default memo(HomeView);
