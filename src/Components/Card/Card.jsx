@@ -1,7 +1,8 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useContext } from "react";
 import axios from "axios";
 import CardView from "./CardView"
 import "./Card.scss"
+import TranslateTextContext from "../context/Translate";
 
 const initialState = {
   data: [],
@@ -32,6 +33,7 @@ const Reducer = (state, action) => {
 
 const Card = () => {
   const [state, dispatch] = useReducer (Reducer, initialState)
+  const {isIndonesia} = useContext(TranslateTextContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +56,7 @@ const Card = () => {
       <CardView
       loading={state.loading}
       data={state.data}
+      isIndonesia={isIndonesia}
       />
     </div>
   );

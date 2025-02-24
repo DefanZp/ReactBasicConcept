@@ -5,9 +5,13 @@ import Detail from "./pages/Detail/Detail";
 import Search from "./pages/Search/Search";
 import "./App.css";
 import { SkeletonTheme } from "react-loading-skeleton";
+import TranslateTextContext from "./Components/context/Translate";
+
 
 const App = () => {
+  const [isIndonesia, setIsIndonesia] = useState(true);
   return (
+    <TranslateTextContext.Provider value={{ isIndonesia, setIsIndonesia }}>
     <SkeletonTheme baseColor="#E0E0E0" highlightColor="#F5F5F5">
     <Router>
       <Routes>
@@ -17,6 +21,7 @@ const App = () => {
       </Routes>
     </Router>
     </SkeletonTheme>
+    </TranslateTextContext.Provider>
   );
 };
 

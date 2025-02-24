@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, {  useEffect, useReducer, useContext } from "react";
 import axios from "axios";
 import HomeView from "./HomeView";
+import TranslateTextContext from "../../Components/context/Translate";
 
 const initialState = {
   data: [],
@@ -36,6 +37,15 @@ const Reducer = (state, action) => {
 } 
 
 const Home = () => {
+
+  const { isIndonesia, setIsIndonesia } = useContext(TranslateTextContext);
+
+  const toggleTranslate = () => {
+  setIsIndonesia ((prevTheme) => !prevTheme);
+  
+  };
+
+ 
   const [state,dispatch ]= useReducer (Reducer, initialState)
 
   useEffect(() => {
@@ -70,6 +80,8 @@ const Home = () => {
   return (
     <div>
       <HomeView
+      isIndonesia={isIndonesia}
+      toggleTranslate= {toggleTranslate}
       loading={state.loading}
       data={state.data}
       currentIndex={state.currentIndex}
