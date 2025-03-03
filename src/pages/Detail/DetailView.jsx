@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 
-const DetailView = ({ loading, restaurant }) => {
+const DetailView = ({ loading, restaurant, theme, toggleTheme }) => {
   return (
     <>
       {loading ? (
@@ -83,11 +83,35 @@ const DetailView = ({ loading, restaurant }) => {
               )}
             </div>
 
-            <div className="w-[65%] pt-12 px-28 pb-16">
-              <nav className="flex flex-row mb-24">
-
-                <ul className="list-none flex flex-row flex-1 items-center justify-end">
-                  <li className="flex flex-row gap-12">
+            <div className="w-[65%] pt-12 px-28 pb-16 dark:bg-black">
+              <nav className="Navbar bg-[#FBFBFB] dark:bg-black dark:text-white">
+                <svg
+                  className="w-16 h-16 dark:fill-[#FBFBFB]"
+                  viewBox="0 0 15 15"
+                  version="1.1"
+                  id="restaurant"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#000000"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      id="path11774"
+                      d="M3.5,0l-1,5.5c-0.1464,0.805,1.7815,1.181,1.75,2L4,14c-0.0384,0.9993,1,1,1,1s1.0384-0.0007,1-1L5.75,7.5
+                c-0.0314-0.8176,1.7334-1.1808,1.75-2L6.5,0H6l0.25,4L5.5,4.5L5.25,0h-0.5L4.5,4.5L3.75,4L4,0H3.5z M12,0
+                c-0.7364,0-1.9642,0.6549-2.4551,1.6367C9.1358,2.3731,9,4.0182,9,5v2.5c0,0.8182,1.0909,1,1.5,1L10,14c-0.0905,0.9959,1,1,1,1
+                s1,0,1-1V0z"
+                    ></path>{" "}
+                  </g>
+                </svg>
+                <ul className="Nav-ul">
+                  <li className="Nav-li">
                     <Link to={"/"}>
                       <p>Home</p>
                     </Link>
@@ -97,10 +121,20 @@ const DetailView = ({ loading, restaurant }) => {
                     <p>About</p>
                   </li>
                 </ul>
+                <button onClick={toggleTheme}>
+                  {theme === "light" ? "dark" : "light"}
+                </button>
               </nav>
 
               <div className="flex flex-row items-center justify-between mb-7">
-                <p className="text-[34px] font-semibold">{restaurant?.name}</p>
+                <p
+                  className="text-[34px] font-semibold"
+                  style={{
+                    color: theme === "light" ? "black" : "white",
+                  }}
+                >
+                  {restaurant?.name}
+                </p>
                 <p className="text-[34px] text-[#FFD700] outline-black font-semibold">
                   {restaurant?.rating}
                 </p>
@@ -118,7 +152,11 @@ const DetailView = ({ loading, restaurant }) => {
                   <div className="flex flex-col">
                     {restaurant.menus?.foods?.slice(0, 4).map((food) => (
                       <>
-                        <p className="font-medium">- {food.name}</p>
+                        <p
+                          className="font-medium dark:text-white"
+                        >
+                          - {food.name}
+                        </p>
                       </>
                     ))}
                   </div>
@@ -129,14 +167,22 @@ const DetailView = ({ loading, restaurant }) => {
                   <div className="flex flex-col">
                     {restaurant.menus?.drinks?.slice(0, 4).map((drink) => (
                       <>
-                        <p className="font-medium">- {drink.name}</p>
+                        <p
+                          className="font-medium dark:text-white"
+                        >
+                          - {drink.name}
+                        </p>
                       </>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <p className="pb-8 text-lg font-medium">Lihat restoran lainnya</p>
+              <p
+                className="pb-8 text-lg font-medium dark:text-white"
+              >
+                Lihat restoran lainnya
+              </p>
               <Card />
             </div>
           </div>

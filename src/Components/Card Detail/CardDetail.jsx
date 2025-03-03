@@ -1,35 +1,12 @@
 import { useEffect,useReducer } from "react";
 import axios from "axios";
 import CardDetailView from "./CardDetailView";
+import dataReducer, {initialState} from "../store/reducers/dataReducer";
+import { fetch_Success, fetch_Error} from "../store/actions/dataAction";
 
-const initialState = {
-  data: [],
-  loading: true,
-};
-
-const Reducer = (state, action) => {
-  switch (action.type) {
-    case "Fetch_success" :
-      return {
-        ...state,
-        data: action.payload,
-        loading : false,
-      };
-
-    case "Fetch_error" :
-      return {
-        ...state,
-        error: action.payload,
-        loading : false,
-      };
-     
-    default:
-      throw new Error(`Unhandled action type${action.type}`)  
-  }
-} 
 
 const Card = () => {
-  const [state, dispatch] = useReducer (Reducer, initialState)
+  const [state, dispatch] = useReducer (dataReducer, initialState)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,9 +15,9 @@ const Card = () => {
           "https://restaurant-api.dicoding.dev/list"
         );
         const data= (response.data.restaurants);
-        dispatch ({type:"Fetch_success", payload: data});
+        dispatch (fetch_Success(data));
       } catch (error) {
-        dispatch ({type : "Fetch_error", payload : error.message})
+        dispatch (fetch_Error(error.message))
       } 
     };
 

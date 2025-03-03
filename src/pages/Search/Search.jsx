@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Search.scss"
 import SearchView from "./SearchView";
 
+
 const initialState = {
   restaurant : [],
   loading : true,

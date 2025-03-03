@@ -2,36 +2,21 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState,useReducer } from "react";
 import DetailView from "./DetailView";
+import dataReducer, {initialState} from "../../Components/store/reducers/dataReducer";
+import { fetch_Success,fetch_Error } from "../../Components/store/actions/dataAction";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../../Components/store/actions/themeAction";
 
-const initialState = {
-  data: [],
-  loading: true,
-};
-
-const Reducer = (state, action) => {
-  switch (action.type) {
-    case "Fetch_success" :
-      return {
-        ...state,
-        data: action.payload,
-        loading : false,
-      };
-
-    case "Fetch_error" :
-      return {
-        ...state,
-        error: action.payload,
-        loading : false,
-      };
-     
-    default:
-      throw new Error(`Unhandled action type${action.type}`)  
-  }
-} 
 
 const Details = () => {
+  const rDispatch = useDispatch();
+  const theme = useSelector ((state) => state.theme.theme);
+  const handleToggleTheme = () => {
+    rDispatch(toggleTheme());
+  }
+
   const { id } = useParams();
-  const [state, dispatch] = useReducer (Reducer, initialState)
+  const [state, dispatch] = useReducer (dataReducer, initialState)
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
@@ -40,9 +25,9 @@ const Details = () => {
           `https://restaurant-api.dicoding.dev/detail/${id}`
         );
         const data= (response.data.restaurant);
-        dispatch ({type:"Fetch_success", payload: data});
+        dispatch (fetch_Success(data));
       } catch (error) {
-        dispatch ({type : "Fetch_error", payload : error.message})
+        dispatch (fetch_Error(error.message))
       } 
     };
 
@@ -54,6 +39,8 @@ const Details = () => {
       <DetailView
       loading={state.loading}
       restaurant={state.data}
+      theme={theme}
+      toggleTheme={handleToggleTheme}
       />
     </div>
   );
