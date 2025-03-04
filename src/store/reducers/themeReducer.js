@@ -1,7 +1,7 @@
 import { TOGGLE_THEME } from "../actions/themeAction";
 
 export const initialState = {
-    theme: localStorage.getItem("theme") || "light",
+    theme: localStorage.getItem("theme"),
 }
 const themeReducer = (state = initialState, action) => {
     switch (action.type) {

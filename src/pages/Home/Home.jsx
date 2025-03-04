@@ -1,29 +1,29 @@
-import React, {  useEffect, useReducer, useContext } from "react";
+import React, { useEffect, useReducer, useContext } from "react";
 import axios from "axios";
 import HomeView from "./HomeView";
 import TranslateTextContext from "../../Components/context/Translate";
-import dataReducer, { initialState } from "../../Components/store/reducers/dataReducer";
-import { fetch_Success, fetch_Error, change_Index } from "../../Components/store/actions/dataAction";
+import dataReducer, { initialState } from "../../store/reducers/dataReducer";
+import {
+  fetch_Success,
+  fetch_Error,
+  change_Index,
+} from "../../store/actions/dataAction";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../../Components/store/actions/themeAction";
-
+import { toggleTheme } from "../../store/actions/themeAction";
 
 const Home = () => {
-
   const rDispatch = useDispatch();
-  const theme = useSelector ((state) => state.theme.theme);
+  const theme = useSelector((state) => state.theme.theme);
   const handleToggleTheme = () => {
-    rDispatch (toggleTheme());
+    rDispatch(toggleTheme());
   };
 
   const { isIndonesia, setIsIndonesia } = useContext(TranslateTextContext);
   const toggleTranslate = () => {
-  setIsIndonesia ((prevTheme) => !prevTheme);
-  
+    setIsIndonesia((prevTheme) => !prevTheme);
   };
 
- 
-  const [state,dispatch ]= useReducer (dataReducer, initialState)
+  const [state, dispatch] = useReducer(dataReducer, initialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,11 +31,11 @@ const Home = () => {
         const response = await axios.get(
           "https://restaurant-api.dicoding.dev/list"
         );
-        const data =(response.data.restaurants);
-        dispatch (fetch_Success(data));
+        const data = response.data.restaurants;
+        dispatch(fetch_Success(data));
       } catch (error) {
-        dispatch (fetch_Error(error.message))
-      } 
+        dispatch(fetch_Error(error.message));
+      }
     };
 
     fetchData();
@@ -44,7 +44,7 @@ const Home = () => {
   useEffect(() => {
     if (state.data.length > 0) {
       const interval = setInterval(() => {
-        dispatch (change_Index(( state.currentIndex + 1) % (state.data.length)));
+        dispatch(change_Index((state.currentIndex + 1) % state.data.length));
       }, 3000);
 
       return () => clearInterval(interval);
@@ -54,13 +54,13 @@ const Home = () => {
   return (
     <div>
       <HomeView
-      isIndonesia={isIndonesia}
-      toggleTranslate= {toggleTranslate}
-      loading={state.loading}
-      data={state.data}
-      currentIndex={state.currentIndex}
-      theme={theme}
-      toggleTheme={handleToggleTheme}
+        isIndonesia={isIndonesia}
+        toggleTranslate={toggleTranslate}
+        loading={state.loading}
+        data={state.data}
+        currentIndex={state.currentIndex}
+        theme={theme}
+        toggleTheme={handleToggleTheme}
       />
     </div>
   );

@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import "./RestoList.scss";
 import RestoListView from "./RestoListView";
 import { useDispatch, useSelector } from "react-redux";
-import { add_Resto, delete_Resto } from "../../Components/store/actions/restoListAction";
+import { add_Resto, delete_Resto } from "../../store/actions/restoListAction";
 
 const RestoList = () => {
   const [newResto, setNewResto] = useState({
     id: 3,
     name: "",
-    cuisine: "", 
+    cuisine: "",
     address: "",
     city: "",
     rating: 0,
-    reviews: 0, 
+    reviews: 0,
   });
 
   const dispatch = useDispatch();
@@ -29,8 +29,8 @@ const RestoList = () => {
   const handleAddResto = () => {
     dispatch(add_Resto(newResto));
     setNewResto({
-      ...newResto,  
-      id: Math.random().toString(36).substring(2, 9), 
+      ...newResto,
+      id: Math.random().toString(36).substring(2, 9),
       name: "",
       cuisine: "",
       address: "",
