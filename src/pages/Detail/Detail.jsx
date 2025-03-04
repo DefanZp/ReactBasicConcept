@@ -5,13 +5,14 @@ import DetailView from "./DetailView";
 import dataReducer, { initialState } from "../../store/reducers/dataReducer";
 import { fetch_Success, fetch_Error } from "../../store/actions/dataAction";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../../store/actions/themeAction";
+import useThemeSelector from "../../store/Theme/themeSelector";
+import { themeAction } from "../../store/Theme/ThemeSlice";
 
 const Details = () => {
   const rDispatch = useDispatch();
-  const theme = useSelector((state) => state.theme.theme);
+  const theme = useThemeSelector();
   const handleToggleTheme = () => {
-    rDispatch(toggleTheme());
+    rDispatch(themeAction.toggleTheme());
   };
 
   const { id } = useParams();

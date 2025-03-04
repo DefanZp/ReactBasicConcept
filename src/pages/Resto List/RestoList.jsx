@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./RestoList.scss";
 import RestoListView from "./RestoListView";
-import { useDispatch, useSelector } from "react-redux";
-import { add_Resto, delete_Resto } from "../../store/actions/restoListAction";
+import { useDispatch } from "react-redux";
+import { useRestoListSelector } from "../../store/RestoList/restoSelector";
+import { restoAction } from "../../store/RestoList/RestoListSlice";
 
 const RestoList = () => {
   const [newResto, setNewResto] = useState({
@@ -16,7 +17,7 @@ const RestoList = () => {
   });
 
   const dispatch = useDispatch();
-  const restos = useSelector((state) => state.resto.resto);
+  const restos = useRestoListSelector();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,7 @@ const RestoList = () => {
   };
 
   const handleAddResto = () => {
-    dispatch(add_Resto(newResto));
+    dispatch(restoAction.addResto([...restos, newResto]));
     setNewResto({
       ...newResto,
       id: Math.random().toString(36).substring(2, 9),
@@ -41,7 +42,8 @@ const RestoList = () => {
   };
 
   const handleDeleteResto = (id) => {
-    dispatch(delete_Resto(id));
+    const updatedResto = restos.filter((data) => data.id !== id);
+    dispatch(restoAction.update([...restos, updatedResto]));
   };
 
   return (

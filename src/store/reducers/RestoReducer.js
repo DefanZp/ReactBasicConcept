@@ -1,4 +1,4 @@
-import { ADD_RESTO, DELETE_RESTO } from "../actions/restoListAction";
+/*import { ADD_RESTO, DELETE_RESTO } from "../actions/restoListAction";
 
 const initialState = {
     resto : [],
@@ -23,4 +23,4 @@ const restoReducer = (state = initialState, action ) => {
 }
 
 export default restoReducer
-
+*/

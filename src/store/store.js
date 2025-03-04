@@ -1,8 +1,11 @@
-import {createStore, applyMiddleware} from 'redux';
-import rootReducer from './reducers/reducer';
-//import { successAddRestoMiddleware } from "./middleware/restoMiddleware";  
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./reducer";
+import { successAddRestoMiddleware } from "./middleware/restoMiddleware";
 
-//export const middlewareEnhancer = applyMiddleware(successAddRestoMiddleware);
-const store = createStore(rootReducer);
+const store = configureStore({
+    reducer : rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(successAddRestoMiddleware)
+});
 
 export default store;

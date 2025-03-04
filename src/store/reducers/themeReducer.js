@@ -1,4 +1,4 @@
-import { TOGGLE_THEME } from "../actions/themeAction";
+/*import { TOGGLE_THEME } from "../actions/themeAction";
 
 export const initialState = {
     theme: localStorage.getItem("theme"),
@@ -19,3 +19,4 @@ const themeReducer = (state = initialState, action) => {
 }
 
 export default themeReducer
+*/
